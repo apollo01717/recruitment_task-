@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace SoftwareInterative_API.Entities
 {
-    public class Question : BaseEntity
+    public abstract class BaseEntity
     {
-        public string Content { get; set; }
-        public virtual List<Option> Options { get; set; }
+        public int Id { get; set; }
     }
 }
