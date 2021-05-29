@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SoftwareInterative_API.Entities;
+using SoftwareInterative_API.Middleware;
 using SoftwareInterative_API.Repositories;
 using SoftwareInterative_API.Services;
 using System;
@@ -21,7 +22,7 @@ namespace SoftwareInterative_API
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            Configuration = configuration;  
         }
 
         public IConfiguration Configuration { get; }
@@ -31,10 +32,13 @@ namespace SoftwareInterative_API
         {
             services.AddTransient<IQuestionRepository, QuestionRepository>();
             services.AddTransient<IQuestionService, QuestionService>();
+            services.AddTransient<IAnswerRepository, AnswerRepository>();
+            services.AddTransient<IAnswerService, AnswerService>();
             services.AddControllers();
             services.AddDbContext<SoftwareInteractiveDbContext>();
             services.AddScoped<DbSeeder>();
             services.AddAutoMapper(this.GetType().Assembly);
+            services.AddScoped<ErrorHandlingMiddleware>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SoftwareInterative_API", Version = "v1" });
@@ -51,6 +55,7 @@ namespace SoftwareInterative_API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SoftwareInterative_API v1"));
             }
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseHttpsRedirection();
 

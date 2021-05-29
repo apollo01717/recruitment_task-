@@ -16,7 +16,9 @@ namespace SoftwareInterative_API
             CreateMap<OptionDto, Option>(); 
             
             CreateMap<Question, QuestionDto>();
-            CreateMap<QuestionDto, Question>();
+            CreateMap<QuestionDto, Question>();   
+            CreateMap<Answer, CreateAnswerDto>();
+            CreateMap<CreateAnswerDto, Answer>();
 
         }
     }
