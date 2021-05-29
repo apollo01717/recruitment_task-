@@ -8,6 +8,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SoftwareInterative_API.Entities;
+using SoftwareInterative_API.Repositories;
+using SoftwareInterative_API.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,10 +29,12 @@ namespace SoftwareInterative_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddTransient<IQuestionRepository, QuestionRepository>();
+            services.AddTransient<IQuestionService, QuestionService>();
             services.AddControllers();
             services.AddDbContext<SoftwareInteractiveDbContext>();
             services.AddScoped<DbSeeder>();
+            services.AddAutoMapper(this.GetType().Assembly);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SoftwareInterative_API", Version = "v1" });

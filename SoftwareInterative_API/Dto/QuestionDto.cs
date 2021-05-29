@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SoftwareInterative_API.Entities
+namespace SoftwareInterative_API.Dto
 {
-    public class Question
+    public class QuestionDto
     {
         public int Id { get; set; }
         public string Content { get; set; }
-        public virtual List<Option> Options { get; set; }
+        public IList<OptionDto> Options { get; set; }
     }
 }
